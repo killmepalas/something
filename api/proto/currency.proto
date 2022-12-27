@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option go_package="./currencies/currencypb";
+package api;
+
+
+//import "google/api/annotations.proto";
+
+
+//Перечисление доступных стран
+enum Countries{
+  USA = 0;
+  Ukraine = 1;
+  Spain = 2;
+  Belarus = 3;
+  Japan = 4;
+};
+
+//Перечисление доступных валют
+enum Currencies{
+  Dollar = 0;
+  Hryvnia = 1;
+  Euro = 2;
+  BelRuble = 3;
+  Yen = 4;
+}
+
+//Получив страну, возвращает название её валюты и перевод в российские рубли
+service Currency {
+  rpc Do (CurRequest) returns (CurResponse);
+  rpc DoStrm (CurRequest) returns (stream CurResponse);
+
+}
+
+//Запрос, включающий название страны
+message CurRequest {
+  Countries message = 1;
+}
+
+//Ответ, содержащий валюту и её значение в рублях
+message CurResponse{
+  Currencies currency = 1;
+  int32 value = 2;
+}

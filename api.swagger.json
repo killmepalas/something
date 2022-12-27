@@ -1,0 +1,111 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "currency.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "apiCountries": {
+      "type": "string",
+      "enum": [
+        "USA",
+        "Ukraine",
+        "Spain",
+        "Belarus",
+        "Japan"
+      ],
+      "default": "USA",
+      "title": "Перечисление доступных стран"
+    },
+    "apiCurResponse": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "$ref": "#/definitions/apiCurrencies"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Ответ, содержащий валюту и её значение в рублях"
+    },
+    "apiCurrencies": {
+      "type": "string",
+      "enum": [
+        "Dollar",
+        "Hryvnia",
+        "Euro",
+        "BelRuble",
+        "Yen"
+      ],
+      "default": "Dollar",
+      "title": "Перечисление доступных валют"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "runtimeStreamError": {
+      "type": "object",
+      "properties": {
+        "grpc_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "http_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "http_status": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

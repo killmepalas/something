@@ -1,0 +1,168 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "currency.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Currency"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api.Currency/Do": {
+      "post": {
+        "operationId": "Currency_Do",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiCurResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiCurRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Currency"
+        ]
+      }
+    },
+    "/api.Currency/DoStrm": {
+      "post": {
+        "operationId": "Currency_DoStrm",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/apiCurResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of apiCurResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiCurRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Currency"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "apiCountries": {
+      "type": "string",
+      "enum": [
+        "USA",
+        "Ukraine",
+        "Spain",
+        "Belarus",
+        "Japan"
+      ],
+      "default": "USA",
+      "title": "Перечисление доступных стран"
+    },
+    "apiCurRequest": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/apiCountries"
+        }
+      },
+      "title": "Запрос, включающий название страны"
+    },
+    "apiCurResponse": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "$ref": "#/definitions/apiCurrencies"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Ответ, содержащий валюту и её значение в рублях"
+    },
+    "apiCurrencies": {
+      "type": "string",
+      "enum": [
+        "Dollar",
+        "Hryvnia",
+        "Euro",
+        "BelRuble",
+        "Yen"
+      ],
+      "default": "Dollar",
+      "title": "Перечисление доступных валют"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: something
+  labels:
+    app: something
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: something
+  template:
+    metadata:
+      labels:
+        app: something
+    spec:
+      containers:
+        - name: something
+          image: localhost:5001/mybuildimage
+          args:
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/keys/fb-admin-key.json
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "10m"
+            limits:
+              memory: "128Mi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: something
+  annotations:
+spec:
+  type: ClusterIP
+  selector:
+    app: something
+  ports:
+    - protocol: TCP
+      port: 8080
+      name: grpc
+
+#---
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRoute
+#metadata:
+#  name: something
+#spec:
+#  entryPoints:
+#    - websecure
+#  routes:
+#    - match: Host(`counter.api.skllzz.com`) || Host(`counter.api.softlynx.ru`)
+#      kind: Rule
+#      services:
+#        - name: something
+#          port: 9001
+#          scheme: https
+#  tls:
+
+
